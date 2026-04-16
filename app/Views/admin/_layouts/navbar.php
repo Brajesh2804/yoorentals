@@ -1,64 +1,159 @@
-<nav class="bg-white shadow-sm border-b sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-
-        <a href="<?= base_url() ?>" class="flex items-center gap-0 group">
-            <img src="<?= base_url('assets/admin/images/logo1b.png') ?>" alt="logo" class="h-10 w-auto object-contain" />
-        </a>
-
-        <div class="hidden md:flex flex-1 mx-12">
-            <div class="flex w-full border-2 border-slate-900 rounded-md overflow-hidden bg-white">
-                <input type="text" placeholder="Search Rooms, Cars, Bikes..." class="w-full px-4 py-1.5 outline-none text-slate-700">
-                <button class="bg-slate-900 text-white px-5 py-2 hover:bg-blue-600 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <div class="flex items-center gap-6">
-            <?php if(session()->get('userlogin')): ?>
-                <div class="relative group">
-                    <button class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 p-1.5 rounded-full transition-all border border-slate-200">
-                        <div class="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white font-black shadow-inner">
-                            <?= strtoupper(substr(session()->get('name'), 0, 1)) ?>
-                        </div>
-                        <div class="hidden lg:block text-left pr-2">
-                            <p class="text-[10px] text-slate-400 font-bold uppercase leading-none">Welcome</p>
-                            <p class="text-sm font-bold text-slate-800 leading-tight"><?= session()->get('name') ?></p>
-                        </div>
-                        <svg class="w-4 h-4 text-slate-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                    </button>
-
-                    <div class="absolute right-0 mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-2xl py-2 hidden group-hover:block z-[60] animate-in fade-in slide-in-from-top-2 duration-200">
-                        <div class="px-4 py-3 border-b border-slate-50 mb-2">
-                            <p class="text-xs text-slate-400 font-medium">Logged in as</p>
-                            <p class="text-sm font-bold text-slate-800 truncate"><?= session()->get('email') ?></p>
-                        </div>
-                        <a href="<?= base_url('admin/dashboard') ?>" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-semibold transition-all">
-                             <span>📊 Dashboard</span>
-                        </a>
-                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 font-semibold transition-all">
-                             <span>👤 My Profile</span>
-                        </a>
-                        <div class="border-t border-slate-50 my-2"></div>
-                        <a href="<?= base_url('admin/auth/logout') ?>" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 font-bold transition-all">
-                             <span>🚪 Logout</span>
-                        </a>
-                    </div>
+<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+    <a class="navbar-brand brand-logo" href="<?= base_url('admin/dashboard') ?>"><img
+        src="<?= base_url('assets/admin/images/logo1b.png') ?>" alt="logo" /></a>
+    <a class="navbar-brand brand-logo-mini" href="<?= base_url('admin/dashboard') ?>"><img
+        src="<?= base_url('assets/admin/images/logo1a.png') ?>" alt="logo" /></a>
+  </div>
+  <div class="navbar-menu-wrapper d-flex align-items-stretch">
+    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+      <span class="mdi mdi-menu"></span>
+    </button>
+    <div class="search-field d-none d-md-block">
+      <!-- <form class="d-flex align-items-center h-100" action="#">
+              <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
                 </div>
-
-            <?php else: ?>
-                <a href="<?= base_url('/login') ?>" class="font-bold text-slate-800 hover:text-blue-600 transition tracking-tight">
-                    Login
-                </a>
-                <a href="<?= base_url('/register') ?>"
-                    class="relative inline-flex items-center px-6 py-1.5 font-bold text-slate-900 bg-white border-4 border-t-yellow-400 border-l-blue-500 border-r-green-500 border-b-red-500 rounded-full hover:shadow-lg transition-all scale-95 hover:scale-100">
-                    <span class="mr-1 text-xl">+</span> SELL
-                </a>
-            <?php endif; ?>
-        </div>
+                <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+              </div>
+            </form> -->
     </div>
+    <ul class="navbar-nav navbar-nav-right">
+      <li class="nav-item nav-profile dropdown">
+        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <div class="nav-profile-img">
+            <img src="<?= base_url(DP_PATH . session('image')) ?>" alt="image">
+            <span class="availability-status online"></span>
+          </div>
+          <div class="nav-profile-text">
+            <p class="mb-1 text-black">
+              <?= ucwords(session('name')) ?>
+            </p>
+          </div>
+        </a>
+        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+          <a class="dropdown-item" href="<?= base_url('admin/dashboard') ?>">
+            <i class="mdi mdi-cached me-2 text-success"></i> Dashboard</a>
+          <a class="dropdown-item" href="<?= base_url('admin/profile') ?>">
+            <i class="mdi mdi-account me-2 text-info"></i> My Profile
+          </a>
+          <a class="dropdown-item" href="<?= base_url('admin/profile/change_password') ?>">
+            <i class="mdi mdi-lock-reset me-2 text-warning"></i> Change Password
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="<?= base_url('admin/logout') ?>" onclick="return confirm('Are You Sure?')">
+            <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
+        </div>
+      </li>
+      <!-- <li class="nav-item d-none d-lg-block full-screen-link">
+              <a class="nav-link">
+                <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+              </a>
+            </li> -->
+      <!-- <li class="nav-item dropdown">
+              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-email-outline"></i>
+                <span class="count-symbol bg-warning"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                <h6 class="p-3 mb-0">Messages</h6>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="<?= base_url('assets/admin/images/faces/face4.jpg') ?>" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
+                    <p class="text-gray mb-0"> 1 Minutes ago </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="<?= base_url('assets/admin/images/faces/face2.jpg') ?>" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
+                    <p class="text-gray mb-0"> 15 Minutes ago </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="<?= base_url('assets/admin/images/faces/face3.jpg') ?>" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
+                    <p class="text-gray mb-0"> 18 Minutes ago </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+              </div>
+            </li> -->
+      <!-- <li class="nav-item dropdown">
+              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                <i class="mdi mdi-bell-outline"></i>
+                <span class="count-symbol bg-danger"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <h6 class="p-3 mb-0">Notifications</h6>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-success">
+                      <i class="mdi mdi-calendar"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
+                    <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-warning">
+                      <i class="mdi mdi-cog"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
+                    <p class="text-gray ellipsis mb-0"> Update dashboard </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-info">
+                      <i class="mdi mdi-link-variant"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
+                    <p class="text-gray ellipsis mb-0"> New admin wow! </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+              </div>
+            </li> -->
+      <!-- <li class="nav-item nav-logout d-none d-lg-block">
+              <a class="nav-link" href="#">
+                <i class="mdi mdi-power"></i>
+              </a>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-block">
+              <a class="nav-link" href="#">
+                <i class="mdi mdi-format-line-spacing"></i>
+              </a>
+            </li> -->
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+      data-toggle="offcanvas">
+      <span class="mdi mdi-menu"></span>
+    </button>
+  </div>
 </nav>

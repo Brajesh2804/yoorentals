@@ -1,38 +1,81 @@
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+
+    <li class="nav-item">
+      <a class="nav-link" href="<?= base_url('admin/dashboard') ?>">
+        <span class="menu-title">Dashboard</span>
+        <i class="mdi mdi-home menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+        <span class="menu-title">Authentication</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-lock menu-icon"></i>
+      </a>
+
+      <div class="collapse" id="auth">
+        <ul class="nav flex-column sub-menu">
+
+          <!-- Users List -->
           <li class="nav-item">
-            <a class="nav-link" href="<?=base_url('admin/dashboard')?>">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
+            <a class="nav-link" href="<?=base_url('admin/usergroup') ?>"> User Group</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?=base_url('admin/users')?>">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Users</span>
+            <a class="nav-link" href="<?= base_url('admin/users') ?>">
+              Users List
             </a>
           </li>
+
+          <!--  Member List Dropdown Start -->
           <li class="nav-item">
-            <a class="nav-link" href="<?=base_url('admin/products')?>">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Products</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#memberSubMenu" aria-expanded="false">
+              Member List
+              <i class="menu-arrow"></i>
             </a>
-          </li>
-          <?php /* <li class="nav-item nav-category">UI Elements</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-floor-plan"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="menu-arrow"></i> 
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+
+            <div class="collapse" id="memberSubMenu">
+              <ul class="nav flex-column ms-3">
+
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('admin/members') ?>">
+                    All Members
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('admin/active-members') ?>">
+                    Active Members
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('admin/inactive-members') ?>">
+                    Inactive Members
+                  </a>
+                </li>
+
               </ul>
             </div>
           </li>
-          */ ?>
+          <!-- 🔥 Member List Dropdown End -->
+
+          <!-- Logout -->
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/logout') ?>" onclick="return confirm('Are You Sure?')">
+              Logout
+            </a>
+          </li>
+
         </ul>
-      </nav>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <span class="menu-title">Settings</span>
+        <i class="mdi mdi-file-document-box menu-icon"></i>
+      </a>
+    </li>
+  </ul>
+</nav>

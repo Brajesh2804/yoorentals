@@ -1,6 +1,22 @@
 <?= $this->extend("admin/_layouts/master") ?>
 <?= $this->section("content") ?>
 <div class="content-wrapper">
+
+  <?php if (session()->getFlashdata('message')): ?>
+    <div id="flash-message">
+      <?= session()->getFlashdata('message'); ?>
+    </div>
+
+    <script>
+      // 3 second baad message ko gayab karne ke liye
+      setTimeout(function() {
+        var msg = document.getElementById('flash-message');
+        if (msg) {
+          msg.style.display = 'none';
+        }
+      }, 3000);
+    </script>
+  <?php endif; ?>
   <div class="page-header">
     <h3 class="page-title">
       <span class="page-title-icon bg-gradient-primary text-white me-2">

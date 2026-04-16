@@ -34,6 +34,15 @@ class AuthModel extends Model
         //print_r($result);exit;
         return $result;
     }
+
+    public function is_users_validate($email)
+    {
+        $builder = $this->db->table($this->usersTbl); // users table
+        $builder->where('email', $email);
+        $builder->where('status', 1);
+        $query = $builder->get();
+        return $query->getRow();
+    }
     public function get_profile_data()
     {
         $builder = $this->db->table($this->adminTbl);

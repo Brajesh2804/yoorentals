@@ -18,7 +18,7 @@ class AuthCheckFilter implements FilterInterface
             // }
             //return redirect()->to('/404')->with('message', $msg);
             // return redirect()->to('/admin?access=out')->with('message', $msg);
-            return redirect()->to('/admin');
+            return redirect()->to('/login');
         }else{
             // $menuId = $this->check_privilege();
             // if(! $menuId){

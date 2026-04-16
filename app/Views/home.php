@@ -1,4 +1,4 @@
-<?= $this->extend("_layout/master") ?>
+<?= $this->extend('users/_layouts/master') ?>
 <?= $this->section("content") ?>
 
 <?php

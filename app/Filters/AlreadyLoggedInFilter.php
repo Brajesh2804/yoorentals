@@ -18,7 +18,7 @@ class AlreadyLoggedInFilter implements FilterInterface
             // }
             //return redirect()->to('/404')->with('message', $msg);
             // return redirect()->to('/admin?access=out')->with('message', $msg);
-            return redirect()->to('/admin/admin_dashboard');
+            return redirect()->to('/users/dashboard');
         }else{
             // $menuId = $this->check_privilege();
             // if(! $menuId){
