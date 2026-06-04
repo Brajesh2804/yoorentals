@@ -37,7 +37,7 @@ class Profile extends BaseController
             'joinedDate' => $joinedDate
         ];
 
-        return view('users/profile', $data);
+        return view('users/profile/profile', $data);
     }
     public function updateProfile()
     {
@@ -45,14 +45,12 @@ class Profile extends BaseController
         $db = \Config\Database::connect();
         $userId = $session->get('id');
 
-        // 1. Validation Rules
         $rules = [
             'name' => 'required|min_length[3]',
             'email' => "required|valid_email|is_unique[users.email,id,$userId]",
             'phone' => 'required|numeric|min_length[10]',
         ];
 
-        // Agar password fill kiya hai toh hi validate karein
         if ($this->request->getPost('password')) {
             $rules['password'] = 'min_length[6]';
             $rules['confirm_password'] = 'matches[password]';
@@ -62,32 +60,47 @@ class Profile extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // 2. Prepare Data
         $updateData = [
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
         ];
 
-        // 3. Hash Password (agar change kiya hai)
+        $img = $this->request->getFile('image');
+        if ($img && $img->isValid() && !$img->hasMoved()) {
+            $oldUser = $db->table('users')->where('id', $userId)->get()->getRow();
+            if (!empty($oldUser->image) && file_exists('uploads/profile/' . $oldUser->image)) {
+                @unlink('uploads/profile/' . $oldUser->image);
+            }
+
+            $newName = $img->getRandomName();
+            $img->move('uploads/profile', $newName);
+            $updateData['image'] = $newName;
+        }
+
         if ($this->request->getPost('password')) {
             $updateData['password'] = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
         }
 
-        // 4. Update Database
         $builder = $db->table('users');
         $builder->where('id', $userId);
 
         if ($builder->update($updateData)) {
-
-            // 5. Update Session Data (taaki header/profile me turant dikhe)
-            $session->set([
+            // Updated Session Data
+            $sessionData = [
                 'name' => $updateData['name'],
                 'email' => $updateData['email'],
                 'phone' => $updateData['phone']
-            ]);
+            ];
 
-            return redirect()->to('users/updateProfile')->with('success', 'Profile updated successfully!');
+            // Agar image update hui hai toh naya naam, warna purana hi rehne do
+            if (isset($updateData['image'])) {
+                $sessionData['image'] = $updateData['image'];
+            }
+
+            $session->set($sessionData);
+
+            return redirect()->to(base_url('users/profile'))->with('success', 'Profile updated successfully!');
         } else {
             return redirect()->back()->with('error', 'Something went wrong.');
         }

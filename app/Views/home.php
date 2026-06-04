@@ -1,12 +1,13 @@
 <?= $this->extend('users/_layouts/master') ?>
 <?= $this->section("content") ?>
 
+
 <?php
 $db = \Config\Database::connect(); // Connection pehle check karein
 
 // Ye line active ads fetch karti hai
 $ads = $db->table('ads')
-    ->where('status', 1) 
+    ->where('status', 1)
     ->orderBy('id', 'DESC') // Latest ads upar dikhane ke liye
     ->get()->getResult();
 ?>
@@ -225,11 +226,18 @@ function indian_currency($num)
     }
 
     window.onload = () => {
-        // Agar URL mein pehle se search keyword (?q=...) hai, toh filter mat chalao
-        const urlParams = new URLSearchParams(window.location.search);
-        if (!urlParams.has('q')) {
-            filterItems('all', 'All Categories');
+    const urlParams = new URLSearchParams(window.location.search);
+    const cat = urlParams.get('cat');
+
+    if (cat) {
+        // category aayi hai URL se
+        const activeTab = document.getElementById('cat-' + cat);
+        if (activeTab) {
+            activeTab.click(); // same function use ho jayega
         }
+    } else if (!urlParams.has('q')) {
+        filterItems('all', 'All Categories');
+    }
     };
 </script>
 

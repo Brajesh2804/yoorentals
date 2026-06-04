@@ -19,16 +19,16 @@ class Auth extends BaseController
     {
         $data = [];// 
 
-        // Agar POST request hai
+
         if ($this->request->getMethod() == 'POST') {
-            // print_r($_POST); exit;
+
             $validation = $this->validate([
                 'email' => [
                     'rules' => 'required|valid_email|is_not_unique[users.email]',
                     'errors' => [
                         'required' => 'Email is required',
                         'valid_email' => 'Enter a valid email address',
-                        'is_not_unique' => 'This email is not registered on your service'
+                        'is_not_unique' => 'Email not registered'
                     ]
                 ],
                 'password' => [
@@ -42,42 +42,66 @@ class Auth extends BaseController
             ]);
 
             if (!$validation) {
-                // Validation failed
+
+
+                if ($this->validator->hasError('email')) {
+                    session()->setFlashdata(
+                        'message',
+                        '<div class="alert alert-danger">' .
+                        $this->validator->getError('email') .
+                        '</div>'
+                    );
+                }
+
+                if ($this->validator->hasError('password')) {
+                    session()->setFlashdata(
+                        'message',
+                        '<div class="alert alert-danger">' .
+                        $this->validator->getError('password') .
+                        '</div>'
+                    );
+                }
+
+
                 $data['validation'] = $this->validator;
                 return view('users/Auth/login', $data);
+
             } else {
-                // print_r($_POST); exit;
+
                 $email = $this->request->getPost('email');
                 $password = $this->request->getPost('password');
                 $user_info = $this->authModel->is_users_validate($email);
 
-                // if (!isset($user_info->id)) {
-                //     // print_r($user_info); exit;
-                //     session()->setFlashdata('message', '<div class="alert alert-danger">Inactive user. Contact administrator...</div>');
-                //     return redirect()->to(base_url('login'));
-                // }
-
                 $check_password = Hash::check($password, $user_info->password);
+
                 if ($check_password) {
+
                     $sessionData = array(
                         'id' => $user_info->id,
                         'name' => $user_info->name,
                         'email' => $user_info->email,
                         'password' => $user_info->password,
-                        // 'phone' => $user_info->phone,
-                        // 'address' => $user_info->address,
-                        // 'image' => $user_info->image,
-                        // 'privilege_id' => $user_info->privilege_id,
-                        // 'status' => $user_info->status,
+                        'phone' => $user_info->phone,
+                        'image' => $user_info->image,
                         'userlogin' => true,
                     );
+
                     session()->set($sessionData);
+                    session()->setFlashdata(
+                        'success',
+                        '<div class="alert alert-success">Login Successful</div>'
+                    );
                     return redirect()->to('/');
+
                 } else {
-                    session()->setFlashdata('message', '<div class="alert alert-danger">Incorrect Password</div>');
+
+                    session()->setFlashdata(
+                        'message',
+                        '<div class="alert alert-danger">Incorrect Password</div>'
+                    );
+
                     return redirect()->to('/login')->withInput();
                 }
-                // print_r($user_info);exit;
             }
         }
 
@@ -145,7 +169,21 @@ class Auth extends BaseController
     }
     public function logout()
     {
-        session()->destroy();
-        return redirect()->to('/')->with('success', 'You have been logged out.');
+        session()->remove([
+            'id',
+            'name',
+            'email',
+            'password',
+            'phone',
+            'image',
+            'userlogin'
+        ]);
+
+        session()->setFlashdata(
+            'success',
+            '<div class="alert alert-success">Logout Successful</div>'
+        );
+
+        return redirect()->to('/');
     }
 }

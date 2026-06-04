@@ -19,8 +19,8 @@ $routes->group('', ['filter' => 'AlreadyLoggedIn'], function ($routes) {
 
     // WPS Admin Login
     $routes->match(['get', 'post'], '/wpsadmin', 'Admin\Auth::login');
-    });
-    
+});
+
 
 //  Logout Routes
 // $routes->get('/logout', 'Admin\Auth::logout');
@@ -36,7 +36,9 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->get('/admin/dashboard', 'Admin\Dashboard::index');
 
     // Profile
-    $routes->match(['get', 'post'], '/users/profile', 'Users\Auth::profile');
+    $routes->match(['get', 'post'], '/users/profile', 'Users\Profile::profile');
+    $routes->post('users/updateProfile', 'Users\Profile::updateProfile');
+
     $routes->match(['get', 'post'], '/admin/profile', 'Admin\Profile::index');
     $routes->match(['get', 'post'], '/admin/edit_profile/(:num)', 'Admin\Profile::edit_profile/$1');
     $routes->match(['get', 'post'], 'admin/profile/change_password', 'Admin\Profile::change_password');
@@ -53,5 +55,13 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->match(['get', 'post'], 'send-message', 'Users\Messages::send_message');
     $routes->match(['get', 'post'], 'messages', 'Users\Messages::view_messages');
     $routes->match(['get', 'post'], 'messages/chat/(:num)/(:num)', 'Users\Messages::view_messages/$1/$2');
+
+    //About
+    $routes->match(['get', 'post'], 'about', 'Home::about');
+    $routes->match(['get', 'post'], 'privacy-policy', 'Home::privacy');
+    $routes->match(['get', 'post'], 'terms', 'Home::terms');
+    $routes->match(['get', 'post'], 'contact', 'Home::contact');
+
+    $routes->match(['get','post'], 'subscribe', 'Home::subscribe');
 
 });

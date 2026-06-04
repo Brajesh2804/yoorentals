@@ -33,13 +33,13 @@
             <?php endforeach; ?>
         </div>
 
-        <div class="mt-12 p-6 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-between">
+        <!-- <div class="mt-12 p-6 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-between">
             <div>
                 <h4 class="font-bold text-blue-900">Confused about category?</h4>
                 <p class="text-sm text-blue-700">Contact our support team for quick help.</p>
             </div>
             <button class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold text-sm">Help Me</button>
-        </div>
+        </div> -->
     </div>
 </div>
 
