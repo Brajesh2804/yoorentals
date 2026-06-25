@@ -72,21 +72,21 @@ class Messages extends BaseController
         }
 
         $db = \Config\Database::connect();
-        $my_id = session()->get('id');
+        $my_id = session()->get('user_id');
 
         // --- CHAT LIST ---
         $data['chat_list'] = $db->query("
         SELECT 
             m.ad_id, 
             a.title as ad_title, 
-            u.id as other_user_id, 
+            u.user_id as other_user_id, 
             u.name as user_name,
             m.message as last_msg, 
             m.created_at as last_time
         FROM messages m
         JOIN ads a ON a.id = m.ad_id
-        JOIN users u ON u.id = IF(m.sender_id = $my_id, m.receiver_id, m.sender_id)
-        WHERE m.sender_id = $my_id OR m.receiver_id = $my_id
+        JOIN users u ON u.user_id = IF(m.sender_id = $my_id, m.receiver_id, m.sender_id)
+        WHERE (m.sender_id = $my_id OR m.receiver_id = $my_id)
         AND m.id IN (SELECT MAX(id) FROM messages GROUP BY ad_id, IF(sender_id = $my_id, receiver_id, sender_id))
         ORDER BY m.created_at DESC
         ")->getResult();
@@ -98,7 +98,7 @@ class Messages extends BaseController
             $data['active_ad'] = $ad_id;
 
             $data['other_user'] = $db->table('users')
-                ->where('id', $user_id)
+                ->where('user_id', $user_id)
                 ->get()
                 ->getRow();
 

@@ -49,8 +49,9 @@ class Auth extends BaseController
                 $email = $this->request->getPost('email');
                 $password = $this->request->getPost('password');
                 $user_info = $this->authmodel->isvalidate($email);
+                
 
-                if (!isset($user_info->id)) {
+                if (!isset($user_info->user_id)) {
                     // print_r($user_info); exit;
                     session()->setFlashdata('message', '<div class="alert alert-danger">Inactive user. Contact administrator...</div>');
                     return redirect()->to(base_url('wpsadmin'));
@@ -59,7 +60,8 @@ class Auth extends BaseController
                 $check_password = Hash::check($password, $user_info->password);
                 if ($check_password) {
                     $sessionData = array(
-                        'id' => $user_info->id,
+                        'user_id' => $user_info->user_id,
+                        'group_id' => $user_info->group_id,
                         'name' => $user_info->name,
                         'email' => $user_info->email,
                         'phone' => $user_info->phone,
@@ -67,7 +69,7 @@ class Auth extends BaseController
                         'image' => $user_info->image,
                         // 'privilege_id' => $user_info->privilege_id,
                         'status' => $user_info->status,
-                        'role' => $user_info->role,
+                        // 'role' => $user_info->role,
                         'userlogin' => true,
                     );
                     session()->set($sessionData);

@@ -71,13 +71,34 @@ class Auth extends BaseController
                 $email = $this->request->getPost('email');
                 $password = $this->request->getPost('password');
                 $user_info = $this->authModel->is_users_validate($email);
+                
+                if (!$user_info) {
+                    session()->setFlashdata(
+                        'message',
+                        '<div class="alert alert-danger">User not found.</div>'
+                    );
+
+                    return redirect()->to('/login');
+                }
+                if ($user_info->is_blocked == 1) {
+
+                    session()->setFlashdata(
+                        'message',
+                        '<div class="alert alert-danger">
+                        <strong>Account Blocked!</strong><br>
+                        ' . $user_info->block_reason . '
+                        </div>'
+                    );
+
+                    return redirect()->to('/login');
+                }
 
                 $check_password = Hash::check($password, $user_info->password);
 
                 if ($check_password) {
 
                     $sessionData = array(
-                        'id' => $user_info->id,
+                        'user_id' => $user_info->user_id,
                         'name' => $user_info->name,
                         'email' => $user_info->email,
                         'password' => $user_info->password,
@@ -170,7 +191,7 @@ class Auth extends BaseController
     public function logout()
     {
         session()->remove([
-            'id',
+            'user_id',
             'name',
             'email',
             'password',

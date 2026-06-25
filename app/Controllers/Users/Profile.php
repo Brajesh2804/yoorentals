@@ -16,10 +16,10 @@ class Profile extends BaseController
     public function profile()
     {
         $db = \Config\Database::connect();
-        $userId = session()->get('id');
+        $userId = session()->get('user_id');
 
         // 1. Database se user ka saara fresh data nikalna
-        $user = $db->table('users')->where('id', $userId)->get()->getRow();
+        $user = $db->table('users')->where('user_id', $userId)->get()->getRow();
 
         // 2. Total Rents count (Agar bookings table nahi hai toh 0 set karega)
         try {
@@ -43,11 +43,11 @@ class Profile extends BaseController
     {
         $session = session();
         $db = \Config\Database::connect();
-        $userId = $session->get('id');
+        $userId = $session->get('user_id');
 
         $rules = [
             'name' => 'required|min_length[3]',
-            'email' => "required|valid_email|is_unique[users.email,id,$userId]",
+            'email' => "required|valid_email|is_unique[users.email,user_id,$userId]",
             'phone' => 'required|numeric|min_length[10]',
         ];
 
@@ -68,7 +68,7 @@ class Profile extends BaseController
 
         $img = $this->request->getFile('image');
         if ($img && $img->isValid() && !$img->hasMoved()) {
-            $oldUser = $db->table('users')->where('id', $userId)->get()->getRow();
+            $oldUser = $db->table('users')->where('user_id', $userId)->get()->getRow();
             if (!empty($oldUser->image) && file_exists('uploads/profile/' . $oldUser->image)) {
                 @unlink('uploads/profile/' . $oldUser->image);
             }
@@ -83,7 +83,7 @@ class Profile extends BaseController
         }
 
         $builder = $db->table('users');
-        $builder->where('id', $userId);
+        $builder->where('user_id', $userId);
 
         if ($builder->update($updateData)) {
             // Updated Session Data

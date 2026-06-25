@@ -1,16 +1,16 @@
 <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        <a class="navbar-brand brand-logo" href="<?= base_url('admin/dashboard') ?>"><img
-                src="<?= base_url('assets/admin/images/logo1b.png') ?>" alt="logo" /></a>
-        <a class="navbar-brand brand-logo-mini" href="<?= base_url('admin/dashboard') ?>"><img
-                src="<?= base_url('assets/admin/images/logo1a.png') ?>" alt="logo" /></a>
-    </div>
-    <div class="navbar-menu-wrapper d-flex align-items-stretch">
-        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-            <span class="mdi mdi-menu"></span>
-        </button>
-        <div class="search-field d-none d-md-block">
-            <!-- <form class="d-flex align-items-center h-100" action="#">
+  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+    <a class="navbar-brand brand-logo" href="<?= base_url('admin/dashboard') ?>"><img
+        src="<?= base_url('assets/admin/images/logo1b.png') ?>" alt="logo" /></a>
+    <a class="navbar-brand brand-logo-mini" href="<?= base_url('admin/dashboard') ?>"><img
+        src="<?= base_url('assets/admin/images/logo1a.png') ?>" alt="logo" /></a>
+  </div>
+  <div class="navbar-menu-wrapper d-flex align-items-stretch">
+    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+      <span class="mdi mdi-menu"></span>
+    </button>
+    <div class="search-field d-none d-md-block">
+      <!-- <form class="d-flex align-items-center h-100" action="#">
               <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
                   <i class="input-group-text border-0 mdi mdi-magnify"></i>
@@ -18,85 +18,90 @@
                 <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
               </div>
             </form> -->
+    </div>
+    <ul class="navbar-nav navbar-nav-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+          data-bs-toggle="dropdown">
+
+          <i class="mdi mdi-bell-outline" style="font-size:22px;"></i>
+
+          <?php if (!empty($unread_contacts)): ?>
+            <span class="count-symbol bg-danger">
+              <?= $unread_contacts ?>
+            </span>
+          <?php endif; ?>
+
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list">
+
+          <h6 class="p-3 mb-0">Contact Messages</h6>
+
+          <div class="dropdown-divider"></div>
+
+          <?php if (!empty($latest_contacts)): ?>
+            <?php foreach ($latest_contacts as $msg): ?>
+              <a href="<?= base_url('admin/contact/view/' . $msg->id) ?>" class="dropdown-item preview-item">
+
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal mb-1">
+                    <?= esc($msg->name) ?>
+                  </h6>
+                  <p class="text-gray mb-0">
+                    <?= esc(substr($msg->message, 0, 40)) ?>...
+                  </p>
+                </div>
+
+              </a>
+
+              <div class="dropdown-divider"></div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p class="p-3 text-center text-gray">No messages</p>
+          <?php endif; ?>
+
         </div>
-        <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item dropdown">
-                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
-                    data-bs-toggle="dropdown">
+      </li>
+      <li class="nav-item nav-profile dropdown">
+        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <div class="nav-profile-img">
+            <?php
+            $profileImage = !empty(session('image'))
+              ? base_url('uploads/profile/' . session('image'))
+              : base_url('assets/admin/images/faces/default.png');
+            ?>
 
-                    <i class="mdi mdi-bell-outline" style="font-size:22px;"></i>
-
-                    <?php if (!empty($unread_contacts)): ?>
-                    <span class="count-symbol bg-danger">
-                        <?= $unread_contacts ?>
-                    </span>
-                    <?php endif; ?>
-
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list">
-
-                    <h6 class="p-3 mb-0">Contact Messages</h6>
-
-                    <div class="dropdown-divider"></div>
-
-                    <?php if (!empty($latest_contacts)): ?>
-                    <?php foreach ($latest_contacts as $msg): ?>
-                    <a href="<?= base_url('admin/contact/view/'.$msg->id) ?>" class="dropdown-item preview-item">
-
-                        <div class="preview-item-content">
-                            <h6 class="preview-subject font-weight-normal mb-1">
-                                <?= esc($msg->name) ?>
-                            </h6>
-                            <p class="text-gray mb-0">
-                                <?= esc(substr($msg->message, 0, 40)) ?>...
-                            </p>
-                        </div>
-
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-                    <?php endforeach; ?>
-                    <?php else: ?>
-                    <p class="p-3 text-center text-gray">No messages</p>
-                    <?php endif; ?>
-
-                </div>
-            </li>
-            <li class="nav-item nav-profile dropdown">
-                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <div class="nav-profile-img">
-                        <img src="<?= base_url(DP_PATH . session('image')) ?>" alt="image">
-                        <span class="availability-status online"></span>
-                    </div>
-                    <div class="nav-profile-text">
-                        <p class="mb-1 text-black">
-                            <?= ucwords(session('name')) ?>
-                        </p>
-                    </div>
-                </a>
-                <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item" href="<?= base_url('admin/dashboard') ?>">
-                        <i class="mdi mdi-cached me-2 text-success"></i> Dashboard</a>
-                    <a class="dropdown-item" href="<?= base_url('admin/profile') ?>">
-                        <i class="mdi mdi-account me-2 text-info"></i> My Profile
-                    </a>
-                    <a class="dropdown-item" href="<?= base_url('admin/profile/change_password') ?>">
-                        <i class="mdi mdi-lock-reset me-2 text-warning"></i> Change Password
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?= base_url('admin/logout') ?>"
-                        onclick="return confirm('Are You Sure?')">
-                        <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
-                </div>
-            </li>
-            <!-- <li class="nav-item d-none d-lg-block full-screen-link">
+            <img src="<?= $profileImage ?>" alt="image">
+            <span class="availability-status online"></span>
+          </div>
+          <div class="nav-profile-text">
+            <p class="mb-1 text-black">
+              <?= ucwords(session('name')) ?>
+            </p>
+          </div>
+        </a>
+        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+          <a class="dropdown-item" href="<?= base_url('admin/dashboard') ?>">
+            <i class="mdi mdi-cached me-2 text-success"></i> Dashboard</a>
+          <a class="dropdown-item" href="<?= base_url('admin/profile') ?>">
+            <i class="mdi mdi-account me-2 text-info"></i> My Profile
+          </a>
+          <a class="dropdown-item" href="<?= base_url('admin/profile/change_password') ?>">
+            <i class="mdi mdi-lock-reset me-2 text-warning"></i> Change Password
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="<?= base_url('admin/logout') ?>" onclick="return confirm('Are You Sure?')">
+            <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
+        </div>
+      </li>
+      <!-- <li class="nav-item d-none d-lg-block full-screen-link">
               <a class="nav-link">
                 <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
               </a>
             </li> -->
-            <!-- <li class="nav-item dropdown">
+      <!-- <li class="nav-item dropdown">
               <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-email-outline"></i>
                 <span class="count-symbol bg-warning"></span>
@@ -137,7 +142,7 @@
                 <h6 class="p-3 mb-0 text-center">4 new messages</h6>
               </div>
             </li> -->
-            <!-- <li class="nav-item dropdown">
+      <!-- <li class="nav-item dropdown">
               <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                 <i class="mdi mdi-bell-outline"></i>
                 <span class="count-symbol bg-danger"></span>
@@ -184,7 +189,7 @@
                 <h6 class="p-3 mb-0 text-center">See all notifications</h6>
               </div>
             </li> -->
-            <!-- <li class="nav-item nav-logout d-none d-lg-block">
+      <!-- <li class="nav-item nav-logout d-none d-lg-block">
               <a class="nav-link" href="#">
                 <i class="mdi mdi-power"></i>
               </a>
@@ -194,10 +199,10 @@
                 <i class="mdi mdi-format-line-spacing"></i>
               </a>
             </li> -->
-        </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-            data-toggle="offcanvas">
-            <span class="mdi mdi-menu"></span>
-        </button>
-    </div>
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+      data-toggle="offcanvas">
+      <span class="mdi mdi-menu"></span>
+    </button>
+  </div>
 </nav>

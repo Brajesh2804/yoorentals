@@ -1,0 +1,129 @@
+/* Common Classes */
+.page-title {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.index-title {
+  color: #4e73df;
+  font-weight: 500;
+}
+.status-badge {
+  background: #28a745;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.action-icon {
+  font-size: 19px;
+  margin-right: 10px;
+}
+.edit-icon {
+  color: #4e73df;
+}
+.delete-icon {
+  color: #dc3545;
+}
+
+/* edit_group */
+.form-check .form-check-input {
+    margin-left: 5px;
+}
+
+.form-group {
+    margin-bottom: 0.6rem;
+}
+
+.menu-row {
+    margin-bottom: 4px;
+    align-items: center;
+  display: flex;
+}
+
+.menu-name {
+  overflow-x: auto;
+}
+
+.menu-name label {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+}
+
+.checkbox-group .form-check {
+    margin-bottom: 2px;
+}
+
+.menu-name::-webkit-scrollbar {
+    height: 4px;
+}
+
+.menu-name::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 5px;
+}
+/* Service Page Specific CSS */
+.service-item {
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.input-group-custom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-btn,
+.remove-btn {
+  padding: 4px 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  line-height: 1;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #28a745;
+}
+.add-btn:hover {
+  background-color: #218838;
+}
+
+.remove-btn {
+  background-color: #dc3545;
+}
+.remove-btn:hover {
+  background-color: #c82333;
+}
+
+.status-group {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.status-group label {
+  margin-bottom: 0;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.alert-danger{
+    --bs-alert-bg: #f8291b !important;
+    --bs-alert-color: #fff !important;
+}
+.alert-success{
+    --bs-alert-bg: #28a745 !important;
+    --bs-alert-color: #fff !important;
+}

@@ -1,81 +1,67 @@
+<?php helper('custom'); ?>
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-  <ul class="nav">
+    <ul class="nav">
 
-    <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('admin/dashboard') ?>">
-        <span class="menu-title">Dashboard</span>
-        <i class="mdi mdi-home menu-icon"></i>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-        <span class="menu-title">Authentication</span>
-        <i class="menu-arrow"></i>
-        <i class="mdi mdi-lock menu-icon"></i>
-      </a>
-
-      <div class="collapse" id="auth">
-        <ul class="nav flex-column sub-menu">
-
-          <!-- Users List -->
-          <li class="nav-item">
-            <a class="nav-link" href="<?=base_url('admin/usergroup') ?>"> User Group</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/users') ?>">
-              Users List
+        <?php if(is_privilege(1)){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/dashboard') ?>">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
             </a>
-          </li>
+        </li>
+        <?php } ?>
 
-          <!--  Member List Dropdown Start -->
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#memberSubMenu" aria-expanded="false">
-              Member List
-              <i class="menu-arrow"></i>
+        <!-- Members Menu -->
+        <?php if(is_privilege(2) || is_privilege(3) || is_privilege(4)){ ?>
+        <li class="nav-item">
+            <a class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                href="#membersMenu"
+                aria-expanded="false">
+
+                <span class="menu-title">Members</span>
+                <i class="mdi mdi-account-multiple"></i> 
             </a>
 
-            <div class="collapse" id="memberSubMenu">
-              <ul class="nav flex-column ms-3">
+            <div class="collapse" id="membersMenu">
+                <ul class="nav flex-column sub-menu ps-3">
 
-                <li class="nav-item">
-                  <a class="nav-link" href="<?= base_url('admin/members') ?>">
-                    All Members
-                  </a>
-                </li>
+                    <?php if(is_privilege(2)){ ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('admin/members/adminindex') ?>">
+                            Admins
+                        </a>
+                    </li>
+                    <?php } ?>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="<?= base_url('admin/active-members') ?>">
-                    Active Members
-                  </a>
-                </li>
+                    <?php if(is_privilege(3)){ ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('users/members/userindex') ?>">
+                            Users
+                        </a>
+                    </li>
+                    <?php } ?>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="<?= base_url('admin/inactive-members') ?>">
-                    Inactive Members
-                  </a>
-                </li>
+                    <!-- <?php if(is_privilege(4)){ ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('admin/products') ?>">
+                            Products
+                        </a>
+                    </li>
+                    <?php } ?> -->
 
-              </ul>
+                </ul>
             </div>
-          </li>
-          <!-- 🔥 Member List Dropdown End -->
+        </li>
+        <?php } ?>
 
-          <!-- Logout -->
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/logout') ?>" onclick="return confirm('Are You Sure?')">
-              Logout
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="menu-title">Settings</span>
+                <i class="mdi mdi-cog menu-icon"></i>
             </a>
-          </li>
+        </li>
 
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <span class="menu-title">Settings</span>
-        <i class="mdi mdi-file-document-box menu-icon"></i>
-      </a>
-    </li>
-  </ul>
+    </ul>
 </nav>

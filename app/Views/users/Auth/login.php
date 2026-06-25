@@ -29,7 +29,7 @@
                 <h1 class="text-5xl font-extrabold text-white leading-tight mb-6">
                     Find the perfect <br><span class="text-blue-500">Space</span> for your next big move.
                 </h1>
-                <p class="text-slate-400 text-lg mb-8 font-medium">Bihar's largest rental community is waiting for you. Log in to access your dashboard.</p>
+                <p class="text-slate-400 text-lg mb-8 font-medium">India's largest rental community is waiting for you. Log in to access your dashboard.</p>
                 
                 <div class="flex items-center gap-4 py-6 border-t border-slate-800">
                     <div class="flex -space-x-2">

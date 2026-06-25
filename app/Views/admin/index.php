@@ -1,5 +1,14 @@
 <?= $this->extend("admin/_layouts/master") ?>
 <?= $this->section("content") ?>
+
+<?php
+$recentUsers = \Config\Database::connect()
+  ->table('users')
+  ->orderBy('user_id', 'DESC')
+  ->limit(5)
+  ->get()
+  ->getResult();
+?>
 <div class="content-wrapper">
 
   <?php if (session()->getFlashdata('message')): ?>
@@ -9,7 +18,7 @@
 
     <script>
       // 3 second baad message ko gayab karne ke liye
-      setTimeout(function() {
+      setTimeout(function () {
         var msg = document.getElementById('flash-message');
         if (msg) {
           msg.style.display = 'none';
@@ -17,55 +26,157 @@
       }, 3000);
     </script>
   <?php endif; ?>
-  <div class="page-header">
-    <h3 class="page-title">
-      <span class="page-title-icon bg-gradient-primary text-white me-2">
-        <i class="mdi mdi-home"></i>
-      </span> Dashboard
-    </h3>
-    <nav aria-label="breadcrumb">
-      <ul class="breadcrumb"> 
-        <li class="breadcrumb-item active" aria-current="page">
-          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-        </li>
-      </ul>
-    </nav>
-  </div>
   <div class="row">
-    <div class="col-md-4 stretch-card grid-margin">
-      <div class="card bg-gradient-danger card-img-holder text-white">
+
+    <!-- Total Users -->
+    <div class="col-md-3 stretch-card grid-margin">
+      <div class="card bg-gradient-primary card-img-holder text-white">
         <div class="card-body">
-          <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+          <h4 class="font-weight-normal mb-3">
+            Total Users
+            <i class="mdi mdi-account-group mdi-24px float-end"></i>
           </h4>
-          <h2 class="mb-5">$ 15,0000</h2>
-          <h6 class="card-text">Increased by 60%</h6>
+
+          <h2 class="mb-3"><?= $total_users ?></h2>
+
+          <a href="<?= base_url('users/members/userindex') ?>" class="text-white">
+            View Users
+          </a>
         </div>
       </div>
     </div>
-    <div class="col-md-4 stretch-card grid-margin">
-      <div class="card bg-gradient-info card-img-holder text-white">
-        <div class="card-body">
-          <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-          </h4>
-          <h2 class="mb-5">45,6334</h2>
-          <h6 class="card-text">Decreased by 10%</h6>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
+
+    <!-- Total Ads -->
+    <div class="col-md-3 stretch-card grid-margin">
       <div class="card bg-gradient-success card-img-holder text-white">
         <div class="card-body">
-          <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-end"></i>
+          <h4 class="font-weight-normal mb-3">
+            Total Ads
+            <i class="mdi mdi-view-grid mdi-24px float-end"></i>
           </h4>
-          <h2 class="mb-5">95,5741</h2>
-          <h6 class="card-text">Increased by 5%</h6>
+
+          <h2 class="mb-3"><?= $total_ads ?></h2>
+
+          <a href="<?= base_url('users/members/adsindex') ?>" class="text-white">
+            View Ads
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Ads -->
+    <div class="col-md-3 stretch-card grid-margin">
+      <div class="card bg-gradient-info card-img-holder text-white">
+        <div class="card-body">
+          <h4 class="font-weight-normal mb-3">
+            Active Ads
+            <i class="mdi mdi-check-circle mdi-24px float-end"></i>
+          </h4>
+
+          <h2 class="mb-3"><?= $active_ads ?></h2>
+
+          <span>Currently Active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blocked Users -->
+    <div class="col-md-3 stretch-card grid-margin">
+      <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="card-body">
+          <h4 class="font-weight-normal mb-3">
+            Blocked Users
+            <i class="mdi mdi-account-cancel mdi-24px float-end"></i>
+          </h4>
+
+          <h2 class="mb-3"><?= $total_blocked_users ?></h2>
+
+          <a href="<?= base_url('users/members/userindex') ?>" class="text-white">
+            View Users
+          </a>
         </div>
       </div>
     </div>
   </div>
+  <div class="row mt-4">
 
-</div>
-<?= $this->endSection() ?>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Recent Users</h5>
+        </div>
+
+        <div class="card-body">
+
+          <table class="table table-bordered table-hover">
+
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <?php foreach ($recentUsers as $user): ?>
+                <tr>
+                  <td>
+                    <?= $user->user_id ?>
+                  </td>
+                  <td>
+                    <?= esc($user->name) ?>
+                  </td>
+                  <td>
+                    <?= esc($user->email) ?>
+                  </td>
+                  <td>
+                    <?= esc($user->phone) ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+
+            </tbody>
+
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">Quick Stats</h5>
+        </div>
+
+        <div class="card-body">
+
+          <p>
+            <strong>Total Users:</strong>
+            <?= $total_users ?>
+          </p>
+
+          <p>
+            <strong>Total Ads:</strong>
+            <?= $total_ads ?>
+          </p>
+
+          <p>
+            <strong>Active Ads:</strong>
+            <?= $active_ads ?>
+          </p>
+
+          <p>
+            <strong>Blocked Users:</strong>
+            <?= $total_blocked_users ?>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <?= $this->endSection() ?>

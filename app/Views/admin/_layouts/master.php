@@ -52,12 +52,12 @@
       <!-- partial:partials/_sidebar.html -->
       <?= $this->include("admin/_layouts/sidebar") ?>
       <!-- partial -->
-      <div class="main-panel">
+      <div class="main-panel d-flex flex-column">
 
         <?= $this->renderSection("content"); ?>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <footer class="footer">
+        <footer class="footer mt-auto">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <?= date('Y') ?> <a
                 href="https://webpanelsolutions.com/" target="_blank">WebPanelSolutions</a>. All rights reserved.</span>

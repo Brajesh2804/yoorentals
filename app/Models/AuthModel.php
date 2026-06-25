@@ -18,7 +18,7 @@ class AuthModel extends Model
         $this->adminTbl = 'admin';
         $this->usersTbl = 'users';
         // $this->menuTbl = 'tbl_group_menu_list';
-        // $this->privilegeTbl = 'tbl_group_privilege';
+        $this->privilegeTbl = 'tbl_group_privilege';
         // $this->settingTbl = 'tbl_setting';
         // $this->privilegePathTbl = 'tbl_privilege_path';
     }
@@ -58,19 +58,14 @@ class AuthModel extends Model
         $result = $builder->update($data);
         return $result;
     }
-    public function is_user_privilege($privilegeId, $menuId, $functionId = null)
-    {
-        $builder = $this->db->table($this->privilegeTbl);
-        $builder->where('group_id', $privilegeId);
-        $builder->where('menu_id', $menuId);
-        if ($functionId == null) {
-            $functionId = 1;
-        }
-        $builder->where('FIND_IN_SET(' . $functionId . ', crud_ids)');
-        $query = $builder->get();
-        $value = $query->getRow();
-        return $value;
-    }
+    public function is_user_privilege($groupId, $menuId)
+{
+    return $this->db->table('tbl_group_privilege')
+        ->where('group_id', $groupId)
+        ->where('menu_id', $menuId)
+        ->get()
+        ->getRow();
+}
     public function getCurrentUrlPrivilege($customPath)
     {
         $builder = $this->db->table($this->privilegePathTbl);

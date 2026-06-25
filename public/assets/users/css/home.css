@@ -1,0 +1,54 @@
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .navbar {
+            background-color: #ffffff !important;
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        .carousel-item img {
+            height: 500px;
+            object-fit: cover;
+        }
+        .search-box {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 80%;
+        }
+        .section {
+            padding: 60px 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+        .card {
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        footer {
+            background: #ffffff;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+        }
+        footer img {
+            margin: 0 8px;
+        }
+   

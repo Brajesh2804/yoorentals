@@ -30,9 +30,12 @@
                             Residential Rooms
                         </a>
                     </li>
-                    <li><a href="<?= base_url('home?cat=cars') ?>" class="hover:text-blue-400 transition-colors">Luxury Car Rentals</a></li>
-                    <li><a href="<?= base_url('home?cat=offices') ?>" class="hover:text-blue-400 transition-colors">Commercial Offices</a></li>
-                    <li><a href="<?= base_url('home?cat=halls') ?>" class="hover:text-blue-400 transition-colors">Event & Marriage Halls</a></li>
+                    <li><a href="<?= base_url('home?cat=cars') ?>" class="hover:text-blue-400 transition-colors">Luxury
+                            Car Rentals</a></li>
+                    <li><a href="<?= base_url('home?cat=offices') ?>"
+                            class="hover:text-blue-400 transition-colors">Commercial Offices</a></li>
+                    <li><a href="<?= base_url('home?cat=halls') ?>" class="hover:text-blue-400 transition-colors">Event
+                            & Marriage Halls</a></li>
                 </ul>
             </div>
 
@@ -94,8 +97,10 @@
         </div>
 
         <div class="border-t border-slate-800/50 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <?= date('Y') ?> <a
-                href="https://webpanelsolutions.com/" target="_blank">WebPanelSolutions</a>. All rights reserved.</span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <?= date('Y') ?><a
+                    href="https://webpanelsolutions.com/" target="_blank" class="text-blue-400 hover:text-blue-600">
+                    WebPanelSolutions
+                </a>. All rights reserved.</span>
             <div class="flex gap-6 text-[10px] font-black uppercase text-slate-500 tracking-tighter">
                 <span>Designed in Bihar</span>
                 <span class="text-slate-800">|</span>

@@ -32,7 +32,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <h3>Profile Details</h3>
-                                <a href="<?= base_url('admin/edit_profile/' . $profile->id) ?>"
+                                <a href="<?= base_url('admin/edit_profile/' . $profile->user_id) ?>"
                                     class="btn btn-primary btn-sm">Edit</a>
                             </div>
 

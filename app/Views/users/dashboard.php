@@ -5,7 +5,7 @@
 
 <?php
 $db = \Config\Database::connect();
-$my_id = session()->get('id');
+$my_id = session()->get('user_id');
 
 // Total ads count
 $total_ads_count = $db->table('ads')->where('owner_id', $my_id)->countAllResults();
@@ -18,7 +18,7 @@ $my_ads = $db->table('ads')
     ->get()->getResult();
 
 // User details fetch karna image ke liye
-$user = $db->table('users')->where('id', $my_id)->get()->getRow();
+$user = $db->table('users')->where('user_id', $my_id)->get()->getRow();
 ?>
 
 <div class="bg-slate-50 min-h-screen py-8">

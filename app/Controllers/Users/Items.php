@@ -25,6 +25,11 @@ class Items extends BaseController
 
         $builder = $db->table('ads');
 
+        $builder->select('ads.*');
+        $builder->join('users', 'users.user_id = ads.owner_id');
+        $builder->where('users.is_blocked', 0);
+        $builder->where('ads.status', 1);
+
         // 1. Agar search keyword hai
         if (!empty($keyword)) {
             $builder->groupStart()
@@ -52,7 +57,7 @@ class Items extends BaseController
         // Query with JOIN to get owner details
         $ad = $db->table('ads')
             ->select('ads.*, users.name as owner_name, users.image as owner_photo')
-            ->join('users', 'users.id = ads.owner_id', 'left') // ads.owner_id check karlein
+            ->join('users', 'users.user_id = ads.owner_id', 'left') // ads.owner_id check karlein
             ->where('ads.id', $id)
             ->get()
             ->getRow();
@@ -102,7 +107,7 @@ class Items extends BaseController
 
         // 3. Data Prepare karein (owner_id aur phone ke sath)
         $data = [
-            'owner_id' => session()->get('id'), // Login user ki ID yahan save hogi
+            'owner_id' => session()->get('user_id'), // Login user ki ID yahan save hogi
             'title' => $this->request->getPost('title'),
             'category' => $this->request->getPost('category'),
             'price' => $this->request->getPost('price'),
@@ -178,7 +183,7 @@ class Items extends BaseController
     public function delete_ad($id)
     {
         $db = \Config\Database::connect();
-        $my_id = session()->get('id');
+        $my_id = session()->get('user_id');
 
         // Security check: Sirf wahi banda delete kar sake jiski ad hai
         $db->table('ads')

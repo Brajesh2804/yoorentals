@@ -34,6 +34,30 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     // Dashboard
     $routes->get('/users/dashboard', 'Users\Dashboard::dashboard');
     $routes->get('/admin/dashboard', 'Admin\Dashboard::index');
+    $routes->get('admin/members/adminindex', 'Admin\Dashboard::admins');
+    $routes->get('admin/members/edit_admin/(:num)', 'Admin\Dashboard::editAdmin/$1');
+    $routes->match(['get','post'],'admin/members/edit_admin/(:num)','Admin\Dashboard::editAdmin/$1');
+    $routes->match(['get','post'],'admin/members/view_admin/(:num)','Admin\Dashboard::viewAdmin/$1');
+    $routes->match(['get','post'],'admin/members/add_admin','Admin\Dashboard::addAdmin');
+
+    $routes->match(['get','post'],'admin/members/delete_admin/(:num)','Admin\Dashboard::deleteAdmin/$1');
+
+    $routes->get('admin/members/user', 'Admin\Dashboard::members');
+    $routes->get('admin/members/view/(:num)', 'Admin\Dashboard::viewMember/$1');
+    $routes->get('admin/members/edit/(:num)', 'Admin\Dashboard::editMember/$1');
+    $routes->get('admin/members/delete/(:num)', 'Admin\Dashboard::deleteMember/$1');
+
+
+    $routes->get('users/members/userindex', 'Admin\Dashboard::users');
+    $routes->get('users/members/view_user/(:num)', 'Admin\Dashboard::viewUser/$1');
+    $routes->get('users/members/user_ads/(:num)', 'Admin\Dashboard::userAds/$1');
+    $routes->match(['get','post'],'users/members/block_user/(:num)','Admin\Dashboard::blockUser/$1');
+    $routes->get('users/members/unblock_user/(:num)', 'Admin\Dashboard::unblockUser/$1');
+    $routes->get('users/members/delete_user/(:num)', 'Admin\Dashboard::deleteUser/$1');
+    $routes->get('users/members/adsindex', 'Admin\Dashboard::allAds');
+
+
+
 
     // Profile
     $routes->match(['get', 'post'], '/users/profile', 'Users\Profile::profile');

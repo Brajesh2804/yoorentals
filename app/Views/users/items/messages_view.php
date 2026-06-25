@@ -30,7 +30,7 @@
                         foreach ($chat_list as $chat):
                             $count = $chat->unread_count ?? 0;
                             $isUnread = ($count > 0);
-                            $isActive = (isset($active_ad) && $active_ad == $chat->ad_id && $other_user->id == $chat->other_user_id);
+                            $isActive = (isset($active_ad) && $active_ad == $chat->ad_id && $other_user->user_id == $chat->other_user_id);
                             ?>
                             <a href="<?= base_url('messages/chat/' . $chat->ad_id . '/' . $chat->other_user_id) ?>"
                                 class="flex items-center gap-3 p-4 hover:bg-blue-50 transition-all relative <?= $isActive ? 'bg-blue-100 border-l-4 border-blue-600' : ($isUnread ? 'bg-blue-50/80 shadow-[inset_4px_0_0_0_#2563eb]' : '') ?>">
@@ -176,7 +176,7 @@
             body: new URLSearchParams({
                 '<?= csrf_token() ?>': '<?= csrf_hash() ?>',
                 'ad_id': '<?= $active_ad ?? 0 ?>',
-                'receiver_id': '<?= $other_user->id ?? 0 ?>',
+                'receiver_id': '<?= $other_user->user_id ?? 0 ?>',
                 'message': message
             })
         });

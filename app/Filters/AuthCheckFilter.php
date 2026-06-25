@@ -31,5 +31,23 @@ class AuthCheckFilter implements FilterInterface
     {
         // Do something here
     }
+
+    public function check_privilege(){
+        helper('custom');
+
+         if(url_is('admin/users')){
+            return is_privilege(1);
+        }else if(url_is('admin/add_user')){
+            return is_privilege(1,2);
+        }else if(url_is('admin/edit_user/*')){
+            return is_privilege(1,3);
+        }else if(url_is('admin/user_profile/*')){
+            return is_privilege(1,4);
+        }else if(url_is('admin/user_delete/*')){
+            return is_privilege(1,5);
+        }
+        
+        return true; //for common url
+    }
 }
     

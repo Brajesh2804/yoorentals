@@ -58,7 +58,7 @@
 
                     <div id="inbox-chat-container" class="flex-1 overflow-y-auto p-6 space-y-4 bg-[#f0f2f5]">
                         <?php foreach ($messages as $m):
-                            $isMine = ($m->sender_id == session()->get('id'));
+                            $isMine = ($m->sender_id == session()->get('user_id'));
                             ?>
                             <div class="flex <?= $isMine ? 'justify-end' : 'justify-start' ?>">
                                 <div
@@ -146,7 +146,7 @@
             body: new URLSearchParams({
                 '<?= csrf_token() ?>': '<?= csrf_hash() ?>',
                 'ad_id': '<?= $active_ad ?? 0 ?>',
-                'receiver_id': '<?= $other_user->id ?? 0 ?>',
+                'receiver_id': '<?= $other_user->user_id ?? 0 ?>',
                 'message': message
             })
         })
