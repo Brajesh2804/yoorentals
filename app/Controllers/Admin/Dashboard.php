@@ -394,7 +394,7 @@ class Dashboard extends BaseController
                 ->where('user_id', $id)
                 ->update($updateData);
 
-            return redirect()->to(base_url('admin/users'));
+            return redirect()->to(base_url('users/members/userindex'));
         }
 
         $data['user'] = $user;
@@ -508,5 +508,7 @@ class Dashboard extends BaseController
             '<div class="alert alert-success">User deleted successfully.</div>'
         );
     }
+
+    
 
 }

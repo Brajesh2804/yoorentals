@@ -71,6 +71,7 @@ class Auth extends BaseController
                         'status' => $user_info->status,
                         // 'role' => $user_info->role,
                         'userlogin' => true,
+                        'login_type' => 'admin' 
                     );
                     session()->set($sessionData);
                     session()->setFlashdata('message', '<div class="alert alert-success text-center">Login Successful! Welcome back.</div>');

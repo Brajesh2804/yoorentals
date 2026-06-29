@@ -2,7 +2,7 @@
 
 if (!function_exists('is_privilege')) {
 
-    function is_privilege($menu_id)
+    function is_privilege($menu_id, $permission = null)
     {
         if (!session()->has('userlogin')) {
             return false;
@@ -10,11 +10,10 @@ if (!function_exists('is_privilege')) {
 
         $auth = model('App\Models\AuthModel');
 
-        $data = $auth->is_user_privilege(
+        return $auth->is_user_privilege(
             session('group_id'),
-            $menu_id
+            $menu_id,
+            $permission
         );
-
-        return !empty($data);
     }
 }

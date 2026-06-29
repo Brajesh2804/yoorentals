@@ -10,20 +10,16 @@ class AlreadyLoggedInFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Do something here
-        $msg = '';        
-        if(session()->has('userlogin')){
-            // if(url_is('admin/*')){
-            //     $msg = '<div class="alert alert-danger">You must be logged in!</div>';
-            // }
-            //return redirect()->to('/404')->with('message', $msg);
-            // return redirect()->to('/admin?access=out')->with('message', $msg);
-            return redirect()->to('/users/dashboard');
-        }else{
-            // $menuId = $this->check_privilege();
-            // if(! $menuId){
-            //     return redirect()->to('/authentication-failed');
-            // }
+        if (session()->has('userlogin')) {
+
+            if (session('login_type') == 'admin') {
+                return redirect()->to('/admin/dashboard');
+            }
+
+            if (session('login_type') == 'user') {
+                return redirect()->to('/users/dashboard');
+            }
+
         }
     }
 

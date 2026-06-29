@@ -105,6 +105,7 @@ class Auth extends BaseController
                         'phone' => $user_info->phone,
                         'image' => $user_info->image,
                         'userlogin' => true,
+                        'login_type'=>'user'
                     );
 
                     session()->set($sessionData);

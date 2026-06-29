@@ -57,12 +57,12 @@
                         </select>
                     </div>
 
-                    <div class="col-md-12 mb-3">
+                    <!-- <div class="col-md-12 mb-3">
                         <label>Address</label>
                         <textarea name="address"
                                   class="form-control"
                                   rows="4"><?= $user->address ?></textarea>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-12">
 
@@ -72,7 +72,7 @@
                             Update User
                         </button>
 
-                        <a href="<?= base_url('admin/users') ?>"
+                        <a href="<?= base_url('users/members/userindex') ?>"
                            class="btn btn-secondary">
                             Back
                         </a>

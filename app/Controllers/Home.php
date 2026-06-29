@@ -115,4 +115,9 @@ class Home extends BaseController
             'Subscription successful!'
         );
     }
+
+    public function authenticationFailed()
+    {
+        return view('errors/authentication_failed');
+    }
 }

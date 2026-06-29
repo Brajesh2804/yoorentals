@@ -74,7 +74,7 @@ function indian_currency($num)
             <div class="space-y-6">
                 <div>
                     <span
-                        class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"><?= $ad->category ?></span>
+                        class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"><?= $ad->category_id ?></span>
                     <h1 class="text-3xl font-black text-slate-900 mt-2"><?= $ad->title ?></h1>
                     <p class="text-slate-400 flex items-center gap-1 mt-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

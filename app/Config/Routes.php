@@ -9,7 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 //  Public Routes
 $routes->get('/', 'Home::home');
 $routes->get('/home', 'Home::home');
-$routes->post('search-ads', 'Home::search_ads');
+$routes->post('searchAds', 'Home::search_ads');
 
 
 //  Auth Routes (Login/Register)
@@ -52,9 +52,11 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->get('users/members/view_user/(:num)', 'Admin\Dashboard::viewUser/$1');
     $routes->get('users/members/user_ads/(:num)', 'Admin\Dashboard::userAds/$1');
     $routes->match(['get','post'],'users/members/block_user/(:num)','Admin\Dashboard::blockUser/$1');
+    $routes->match(['get','post'],'users/members/edit_user/(:num)','Admin\Dashboard::editUser/$1');
     $routes->get('users/members/unblock_user/(:num)', 'Admin\Dashboard::unblockUser/$1');
     $routes->get('users/members/delete_user/(:num)', 'Admin\Dashboard::deleteUser/$1');
     $routes->get('users/members/adsindex', 'Admin\Dashboard::allAds');
+
 
 
 
@@ -89,3 +91,5 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->match(['get','post'], 'subscribe', 'Home::subscribe');
 
 });
+
+$routes->get('authentication-failed', 'Home::authenticationFailed');

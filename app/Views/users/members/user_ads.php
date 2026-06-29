@@ -42,7 +42,7 @@
 
                         <td><?= $ad->title ?></td>
 
-                        <td><?= $ad->category ?></td>
+                        <td><?= $ad->category_id?></td>
 
                         <td>₹<?= number_format($ad->price) ?></td>
 

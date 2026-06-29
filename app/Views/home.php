@@ -131,7 +131,7 @@ function indian_currency($num)
                     $i2 = !empty($imgs[1]) ? base_url('uploads/ads/' . $imgs[1]) : $i1;
                     ?>
                     <div class="item-card bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden group"
-                        data-category="<?= strtolower($item->category) ?>">
+                        data-category="<?= strtolower($item->category_id) ?>">
 
                         <a href="<?= base_url('items/details/' . $item->id) ?>" class="relative block h-48 overflow-hidden"
                             onmouseenter="startSlider(this)" onmouseleave="stopSlider(this)">

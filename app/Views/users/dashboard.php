@@ -154,7 +154,7 @@ $user = $db->table('users')->where('user_id', $my_id)->get()->getRow();
                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                     <div class="absolute top-4 left-4">
                                         <span
-                                            class="bg-white/90 backdrop-blur-sm text-slate-900 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm"><?= $ad->category ?></span>
+                                            class="bg-white/90 backdrop-blur-sm text-slate-900 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm"><?= $ad->category_id?></span>
                                     </div>
                                     <div class="absolute bottom-4 right-4">
                                         <div class="bg-blue-600 text-white px-4 py-1.5 rounded-xl font-black shadow-lg">
