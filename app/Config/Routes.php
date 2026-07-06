@@ -36,11 +36,11 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->get('/admin/dashboard', 'Admin\Dashboard::index');
     $routes->get('admin/members/adminindex', 'Admin\Dashboard::admins');
     $routes->get('admin/members/edit_admin/(:num)', 'Admin\Dashboard::editAdmin/$1');
-    $routes->match(['get','post'],'admin/members/edit_admin/(:num)','Admin\Dashboard::editAdmin/$1');
-    $routes->match(['get','post'],'admin/members/view_admin/(:num)','Admin\Dashboard::viewAdmin/$1');
-    $routes->match(['get','post'],'admin/members/add_admin','Admin\Dashboard::addAdmin');
+    $routes->match(['get', 'post'], 'admin/members/edit_admin/(:num)', 'Admin\Dashboard::editAdmin/$1');
+    $routes->match(['get', 'post'], 'admin/members/view_admin/(:num)', 'Admin\Dashboard::viewAdmin/$1');
+    $routes->match(['get', 'post'], 'admin/members/add_admin', 'Admin\Dashboard::addAdmin');
 
-    $routes->match(['get','post'],'admin/members/delete_admin/(:num)','Admin\Dashboard::deleteAdmin/$1');
+    $routes->match(['get', 'post'], 'admin/members/delete_admin/(:num)', 'Admin\Dashboard::deleteAdmin/$1');
 
     $routes->get('admin/members/user', 'Admin\Dashboard::members');
     $routes->get('admin/members/view/(:num)', 'Admin\Dashboard::viewMember/$1');
@@ -51,14 +51,41 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->get('users/members/userindex', 'Admin\Dashboard::users');
     $routes->get('users/members/view_user/(:num)', 'Admin\Dashboard::viewUser/$1');
     $routes->get('users/members/user_ads/(:num)', 'Admin\Dashboard::userAds/$1');
-    $routes->match(['get','post'],'users/members/block_user/(:num)','Admin\Dashboard::blockUser/$1');
-    $routes->match(['get','post'],'users/members/edit_user/(:num)','Admin\Dashboard::editUser/$1');
+    $routes->match(['get', 'post'], 'users/members/block_user/(:num)', 'Admin\Dashboard::blockUser/$1');
+    $routes->match(['get', 'post'], 'users/members/edit_user/(:num)', 'Admin\Dashboard::editUser/$1');
     $routes->get('users/members/unblock_user/(:num)', 'Admin\Dashboard::unblockUser/$1');
     $routes->get('users/members/delete_user/(:num)', 'Admin\Dashboard::deleteUser/$1');
+
+
     $routes->get('users/members/adsindex', 'Admin\Dashboard::allAds');
+    $routes->get('users/members/view_ads/(:num)', 'Admin\Dashboard::viewAd/$1');
+    $routes->get('users/members/deactivate_ads/(:num)', 'Admin\Dashboard::deactivateAd/$1');
+    $routes->get('users/members/activate_ads/(:num)', 'Admin\Dashboard::activateAd/$1');
+    $routes->get('users/members/delete_ads/(:num)', 'Admin\Dashboard::deleteAd/$1');
+
+
+    $routes->get('users/members/categoryindex', 'Admin\Dashboard::categoryIndex');
+    $routes->get('users/members/add_category', 'Admin\Dashboard::addCategory');
+    $routes->post('users/members/save_category', 'Admin\Dashboard::saveCategory');
+    $routes->get('users/members/view_category/(:num)', 'Admin\Dashboard::viewCategory/$1');
+    $routes->get('users/members/delete_category/(:num)', 'Admin\Dashboard::deleteCategory/$1');
+
+
+    //Settings
+    $routes->get('admin/settings', 'Admin\CMS::websiteSettings');
+    $routes->post('admin/settings/update', 'Admin\CMS::updateWebsiteSettings');
+
+    //Subscribers
+    $routes->get('admin/subscribers', 'Admin\Subscribers::index');
+    $routes->get('admin/subscribers/view/(:num)', 'Admin\Subscribers::view/$1');
+    $routes->get('admin/subscribers/delete/(:num)', 'Admin\Subscribers::delete/$1');
 
 
 
+    // CMS
+    $routes->get('admin/cms', 'Admin\Cms::index');
+    $routes->get('admin/cms/edit/(:num)', 'Admin\Cms::edit/$1');
+    $routes->post('admin/cms/update/(:num)', 'Admin\Cms::update/$1');
 
 
     // Profile
@@ -88,7 +115,7 @@ $routes->group('', ['filter' => 'AuthCheck'], function ($routes) {
     $routes->match(['get', 'post'], 'terms', 'Home::terms');
     $routes->match(['get', 'post'], 'contact', 'Home::contact');
 
-    $routes->match(['get','post'], 'subscribe', 'Home::subscribe');
+    $routes->match(['get', 'post'], 'subscribe', 'Home::subscribe');
 
 });
 

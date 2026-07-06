@@ -19,7 +19,7 @@
                     href="#membersMenu" aria-expanded="false">
 
                     <span class="menu-title">Members</span>
-                    <i class="mdi mdi-account-multiple"></i>
+                    <i class="mdi mdi-account-multiple menu-icon"></i>
                 </a>
 
                 <div class="collapse" id="membersMenu">
@@ -55,6 +55,13 @@
 
                 <div class="collapse" id="productMenu">
                     <ul class="nav flex-column sub-menu">
+                        <?php if (is_privilege(9, 1)) { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url('users/members/categoryindex') ?>">
+                                    Categories
+                                </a>
+                            </li>
+                        <?php } ?>
 
                         <?php if (is_privilege(4, 1)) { ?>
                             <li class="nav-item">
@@ -64,13 +71,6 @@
                             </li>
                         <?php } ?>
 
-                        <?php if (is_privilege(9, 1)) { ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('admin/category') ?>">
-                                    Categories
-                                </a>
-                            </li>
-                        <?php } ?>
 
                     </ul>
                 </div>
@@ -81,15 +81,42 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('admin/subscribers') ?>">
                     Subscribers
+                    <i class="mdi mdi-bell-ring menu-icon"></i>
                 </a>
             </li>
         <?php } ?>
 
-        <?php if (is_privilege(5, 1)) { ?>
+        <!-- <?php if (is_privilege(5, 1)) { ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('admin/messages') ?>">
                     Messages
+                    <i class="mdi mdi-email-multiple menu-icon"></i>
                 </a>
+            </li>
+        <?php } ?> -->
+
+
+        <?php if (is_privilege(11, 1)) { ?>
+            <li class="nav-item">
+
+                <a class="nav-link" data-bs-toggle="collapse" href="#cmsMenu">
+                    <span class="menu-title">CMS</span>
+                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-file-document-edit menu-icon"></i>
+                </a>
+
+                <div class="collapse" id="cmsMenu">
+                    <ul class="nav flex-column sub-menu">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('admin/cms') ?>">
+                                CMS Pages
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
             </li>
         <?php } ?>
 
@@ -101,6 +128,5 @@
                 </a>
             </li>
         <?php } ?>
-
     </ul>
 </nav>

@@ -4,11 +4,11 @@
 <div class="bg-white min-h-screen py-10">
     <div class="max-w-3xl mx-auto px-4 shadow-2xl border rounded-3xl p-8">
         <h2 class="text-2xl font-black mb-6 uppercase tracking-tight">Post Ad: <span
-                class="text-blue-600"><?= ucfirst($category_id) ?></span></h2>
+                class="text-blue-600"><?= ucfirst($category) ?></span></h2>
 
         <form action="<?= base_url('items/save-ad') ?>" method="POST" enctype="multipart/form-data">
             <?= csrf_field() ?>
-            <input type="hidden" name="category" value="<?= $category_id ?>">
+            <input type="hidden" name="category" value="<?= $category ?>">
 
             <div class="mb-5">
                 <label class="block font-bold text-slate-700 mb-1">Ad Title</label>

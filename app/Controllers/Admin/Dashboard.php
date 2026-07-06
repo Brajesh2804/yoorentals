@@ -463,18 +463,6 @@ class Dashboard extends BaseController
         return view('users/members/user_ads', $data);
     }
 
-    public function allAds()
-    {
-        $db = \Config\Database::connect();
-
-        $data['ads'] = $db->table('ads')
-            ->orderBy('id', 'ASC')
-            ->get()
-            ->getResult();
-
-        return view('users/members/adsindex', $data);
-    }
-
     public function deleteUser($id)
     {
         $db = \Config\Database::connect();
@@ -509,6 +497,179 @@ class Dashboard extends BaseController
         );
     }
 
+
+    public function allAds()
+    {
+        $db = \Config\Database::connect();
+
+        $builder = $db->table('ads');
+
+        $search = $this->request->getGet('search');
+
+        if (!empty($search)) {
+
+            $builder->groupStart()
+                ->like('title', $search)
+                ->orLike('price', $search)
+                ->groupEnd();
+        }
+
+        $data['ads'] = $builder
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->getResult();
+
+        return view('users/members/adsindex', $data);
+    }
+
+    public function viewAd($id)
+    {
+        $db = \Config\Database::connect();
+
+        $data['ad'] = $db->table('ads')
+            ->where('id', $id)
+            ->get()
+            ->getRow();
+
+        if (!$data['ad']) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        return view('users/members/view_ads', $data);
+    }
+
+    public function deactivateAd($id)
+    {
+        $db = \Config\Database::connect();
+
+        $db->table('ads')
+            ->where('id', $id)
+            ->update([
+                'status' => 0
+            ]);
+
+        return redirect()->back()->with('success', 'Ad Deactivated Successfully');
+    }
+
+    public function activateAd($id)
+    {
+        $db = \Config\Database::connect();
+
+        $db->table('ads')
+            ->where('id', $id)
+            ->update([
+                'status' => 1
+            ]);
+
+        return redirect()->back()->with('success', 'Ad Activated Successfully');
+    }
+
+    public function deleteAd($id)
+    {
+        $db = \Config\Database::connect();
+
+        $db->table('ads')
+            ->where('id', $id)
+            ->delete();
+
+        return redirect()->back()->with('success', 'Ads Deleted Successfully');
+    }
+
+
+    /********************************************************************/
+
+    public function categoryIndex()
+    {
+        $db = \Config\Database::connect();
+
+        $search = $this->request->getGet('search');
+
+        $builder = $db->table('product_categories');
+
+        if (!empty($search)) {
+
+            $builder->groupStart()
+                ->like('category_name', $search)
+                ->orLike('slug', $search)
+                ->groupEnd();
+        }
+
+        $builder->orderBy('category_id', 'ASC');
+
+        $data['categories'] = $builder->get()->getResult();
+
+        return view('users/members/categoryindex', $data);
+    }
+
+    public function addCategory()
+    {
+        return view('users/members/add_category');
+    }
+
+    public function saveCategory()
+    {
+        $db = \Config\Database::connect();
+
     
 
+
+
+        $db->table('product_categories')->insert([
+
+            'category_name' => $this->request->getPost('category_name'),
+
+            'slug' => url_title($this->request->getPost('category_name'), '-', true),
+
+            'icon' => $this->request->getPost('icon'),
+
+            'description' => $this->request->getPost('description'),
+
+            'sort_order' => $this->request->getPost('sort_order'),
+
+            'status' => $this->request->getPost('status'),
+
+            'created_by' => session('user_id')
+
+        ]);
+
+        return redirect()->to(base_url('users/members/categoryindex'))
+            ->with('success', 'Category Added Successfully');
+    }
+
+    public function viewCategory($id)
+    {
+        $db = \Config\Database::connect();
+
+        $data['category'] = $db->table('product_categories')
+            ->where('category_id', $id)
+            ->get()
+            ->getRow();
+
+        return view('users/members/view_category', $data);
+    }
+
+    public function deleteCategory($id)
+{
+    $db = \Config\Database::connect();
+
+    // Category details
+    $category = $db->table('product_categories')
+                   ->where('category_id', $id)
+                   ->get()
+                   ->getRow();
+
+    if (!$category) {
+        return redirect()->back()->with('error', 'Category Not Found');
+    }
+    
+    // Database se delete
+    $db->table('product_categories')
+       ->where('category_id', $id)
+       ->delete();
+
+    return redirect()->to(base_url('users/members/categoryindex'))
+                     ->with('success', 'Category Deleted Successfully');
+}
+
+    
 }

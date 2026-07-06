@@ -10,12 +10,29 @@ class AuthCheckFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        // Login nahi hai
         if (!session()->has('userlogin')) {
-            return redirect()->to('/wpsadmin');
+
+            // Admin URL
+            if (url_is('admin/*')) {
+                return redirect()->to('/wpsadmin');
+            }
+
+            // User URL
+            return redirect()->to('/login');
         }
 
-        if (!$this->check_privilege()) {
-            return redirect()->to('/authentication-failed');
+        // User admin panel open kar raha hai
+        if (url_is('admin/*') && session('login_type') != 'admin') {
+            return redirect()->to('/login');
+        }
+
+        // Admin privilege check
+        if (session('login_type') == 'admin') {
+
+            if (!$this->check_privilege()) {
+                return redirect()->to('/authentication-failed');
+            }
         }
     }
 

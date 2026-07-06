@@ -8,8 +8,23 @@ class Home extends BaseController
 {
     public function home()
     {
+        $db = \Config\Database::connect();
 
-        return view('home');
+        // Categories
+        $data['categories'] = $db->table('product_categories')
+            ->where('status', 1)
+            ->orderBy('sort_order', 'ASC')
+            ->get()
+            ->getResult();
+
+        // Ads
+        $data['ads'] = $db->table('ads')
+            ->where('status', 1)
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->getResult();
+
+        return view('home', $data);
     }
     public function about()
     {

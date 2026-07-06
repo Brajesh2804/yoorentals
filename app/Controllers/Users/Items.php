@@ -52,18 +52,29 @@ class Items extends BaseController
 
     public function item_details($id)
     {
+        // Sirf user login hona chahiye
+        if (!session()->get('userlogin') || session()->get('login_type') != 'user') {
+
+            session()->setFlashdata(
+                'message',
+                '<div class="alert alert-warning">Please login to view product details.</div>'
+            );
+
+            return redirect()->to(base_url('login'));
+        }
+
         $db = \Config\Database::connect();
 
-        // Query with JOIN to get owner details
         $ad = $db->table('ads')
             ->select('ads.*, users.name as owner_name, users.image as owner_photo')
-            ->join('users', 'users.user_id = ads.owner_id', 'left') // ads.owner_id check karlein
+            ->join('users', 'users.user_id = ads.owner_id', 'left')
             ->where('ads.id', $id)
+            ->where('ads.status', 1)
             ->get()
             ->getRow();
 
         if (!$ad) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Ad not found!");
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $data = [
@@ -76,12 +87,15 @@ class Items extends BaseController
 
     public function category()
     {
-        // Sirf login user hi dekh sake
-        if (!session()->get('userlogin')) {
-            return redirect()->to(base_url('login'));
-        }
+        $db = \Config\Database::connect();
 
-        return view('properties/category');
+        $data['categories'] = $db->table('product_categories')
+            ->where('status', 1)
+            ->orderBy('sort_order', 'ASC')
+            ->get()
+            ->getResult();
+
+        return view('properties/category', $data);
     }
 
     public function save_ad()

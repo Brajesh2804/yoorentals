@@ -9,28 +9,24 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <?php
-            $cats = [
-                ['n' => 'Rooms', 'i' => '🏠', 'slug' => 'rooms'],
-                ['n' => 'Cars', 'i' => '🚗', 'slug' => 'cars'],
-                ['n' => 'Halls', 'i' => '🎊', 'slug' => 'halls'],
-                // ['n' => 'Jobs', 'i' => '💼', 'slug' => 'jobs'],
-                ['n' => 'Bikes', 'i' => '🏍️', 'slug' => 'bikes'],
-                ['n' => 'Offices', 'i' => '🏢', 'slug' => 'offices'],
-                ['n' => 'PG/Hostel', 'i' => '🛌', 'slug' => 'pg/hostel'],
-                ['n' => 'Furniture', 'i' => '🛋️', 'slug' => 'furniture'],
-                // ['n' => 'Electronics', 'i' => '💻', 'slug' => 'electronics'],
-                // ['n' => 'Fashion', 'i' => '👕', 'slug' => 'fashion'],
-                // ['n' => 'Pets', 'i' => '🐶', 'slug' => 'pets'],
-                // ['n' => 'Services', 'i' => '🛠️', 'slug' => 'services'],
-            ];
-            foreach ($cats as $c): ?>
-                <a href="<?= base_url('properties/post-ad/' . $c['slug']) ?>"
+
+            <?php foreach ($categories as $cat): ?>
+
+                <a href="<?= base_url('properties/post-ad/' . $cat->slug) ?>"
                     class="group bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-md transition-all flex flex-col items-center gap-3 text-center">
-                    <span class="text-4xl group-hover:scale-110 transition-transform"><?= $c['i'] ?></span>
-                    <span class="text-sm font-bold text-slate-700 group-hover:text-blue-600"><?= $c['n'] ?></span>
+
+                    <span class="text-4xl">
+                        <?= $cat->icon ?>
+                    </span>
+
+                    <span class="text-sm font-bold">
+                        <?= esc($cat->category_name) ?>
+                    </span>
+
                 </a>
+
             <?php endforeach; ?>
+
         </div>
 
         <!-- <div class="mt-12 p-6 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-between">

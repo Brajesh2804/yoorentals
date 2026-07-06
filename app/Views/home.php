@@ -7,9 +7,12 @@ $db = \Config\Database::connect(); // Connection pehle check karein
 
 // Ye line active ads fetch karti hai
 $ads = $db->table('ads')
-    ->where('status', 1)
-    ->orderBy('id', 'DESC') // Latest ads upar dikhane ke liye
-    ->get()->getResult();
+    ->select('ads.*, product_categories.slug')
+    ->join('product_categories', 'product_categories.category_id = ads.category_id')
+    ->where('ads.status', 1)
+    ->orderBy('ads.id', 'DESC')
+    ->get()
+    ->getResult();
 ?>
 
 <?php
@@ -89,28 +92,47 @@ function indian_currency($num)
 <nav class="sticky top-16 z-40 bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex items-center justify-between gap-6 overflow-x-auto no-scrollbar py-3">
-            <?php
-            $categories = [
-                ['n' => 'All', 'i' => '✨', 'id' => 'all'],
-                ['n' => 'Rooms', 'i' => '🏠', 'id' => 'rooms'],
-                ['n' => 'Cars', 'i' => '🚗', 'id' => 'cars'],
-                ['n' => 'Halls', 'i' => '🎊', 'id' => 'halls'],
-                ['n' => 'Bikes', 'i' => '🏍️', 'id' => 'bikes'],
-                ['n' => 'Offices', 'i' => '🏢', 'id' => 'offices'],
-                ['n' => 'PG/Hostel', 'i' => '🛌', 'id' => 'pg'],
-                ['n' => 'Furniture', 'i' => '🛋️', 'id' => 'furniture'],
-            ];
-            foreach ($categories as $c): ?>
-                <div onclick="filterItems('<?= strtolower($c['id']) ?>', '<?= $c['n'] ?>')"
-                    id="cat-<?= strtolower($c['id']) ?>"
-                    class="cat-tab flex flex-col items-center gap-1 cursor-pointer min-w-max px-4 pb-1 group">
-                    <div class="icon-bg w-10 h-10 flex items-center justify-center text-xl rounded-full transition-all">
-                        <?= $c['i'] ?>
-                    </div>
-                    <span class="text-[11px] font-bold text-gray-500 uppercase tracking-tight group-hover:text-blue-600">
-                        <?= $c['n'] ?>
-                    </span>
+            <div onclick="filterItems('all','All Categories')" id="cat-all"
+                class="cat-tab flex flex-col items-center gap-1 cursor-pointer min-w-max px-4 pb-1 group">
+
+                <div class="icon-bg w-10 h-10 flex items-center justify-center text-xl rounded-full transition-all">
+                    ✨
                 </div>
+
+                <span class="text-[11px] font-bold text-gray-500 uppercase tracking-tight group-hover:text-blue-600">
+                    All
+                </span>
+            </div>
+
+            <!-- All Category -->
+            <!-- <div onclick="filterItems('all','All Categories')" id="cat-all"
+                class="cat-tab flex flex-col items-center gap-1 cursor-pointer min-w-max px-4 pb-1 group">
+
+                <div class="icon-bg w-10 h-10 flex items-center justify-center text-xl rounded-full transition-all">
+                    ✨
+                </div>
+
+                <span class="text-[11px] font-bold text-gray-500 uppercase tracking-tight group-hover:text-blue-600">
+                    All
+                </span>
+            </div> -->
+
+            <?php foreach ($categories as $c): ?>
+
+                <div onclick="filterItems('<?= strtolower($c->slug) ?>','<?= esc($c->category_name) ?>')"
+                    id="cat-<?= strtolower($c->slug) ?>"
+                    class="cat-tab flex flex-col items-center gap-1 cursor-pointer min-w-max px-4 pb-1 group">
+
+                    <div class="icon-bg w-10 h-10 flex items-center justify-center text-xl rounded-full transition-all">
+                        <?= $c->icon ?>
+                    </div>
+
+                    <span class="text-[11px] font-bold text-gray-500 uppercase tracking-tight group-hover:text-blue-600">
+                        <?= esc($c->category_name) ?>
+                    </span>
+
+                </div>
+
             <?php endforeach; ?>
         </div>
     </div>
@@ -131,7 +153,7 @@ function indian_currency($num)
                     $i2 = !empty($imgs[1]) ? base_url('uploads/ads/' . $imgs[1]) : $i1;
                     ?>
                     <div class="item-card bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden group"
-                        data-category="<?= strtolower($item->category_id) ?>">
+                        data-category="<?= strtolower($item->slug ?? '') ?>">
 
                         <a href="<?= base_url('items/details/' . $item->id) ?>" class="relative block h-48 overflow-hidden"
                             onmouseenter="startSlider(this)" onmouseleave="stopSlider(this)">
@@ -141,11 +163,14 @@ function indian_currency($num)
 
                             <div
                                 class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2 py-0.5 rounded text-[10px] font-bold text-blue-600 shadow-sm uppercase">
-                                Verified</div>
+                                Verified
+                            </div>
+
                             <div
                                 class="absolute bottom-3 left-3 bg-gray-900/80 backdrop-blur text-white px-3 py-1 rounded-lg font-bold text-sm">
                                 ₹<?= indian_currency($item->price) ?>
                             </div>
+
                         </a>
 
                         <div class="p-4">
@@ -226,18 +251,18 @@ function indian_currency($num)
     }
 
     window.onload = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const cat = urlParams.get('cat');
+        const urlParams = new URLSearchParams(window.location.search);
+        const cat = urlParams.get('cat');
 
-    if (cat) {
-        // category aayi hai URL se
-        const activeTab = document.getElementById('cat-' + cat);
-        if (activeTab) {
-            activeTab.click(); // same function use ho jayega
+        if (cat) {
+            // category aayi hai URL se
+            const activeTab = document.getElementById('cat-' + cat);
+            if (activeTab) {
+                activeTab.click(); // same function use ho jayega
+            }
+        } else if (!urlParams.has('q')) {
+            filterItems('all', 'All Categories');
         }
-    } else if (!urlParams.has('q')) {
-        filterItems('all', 'All Categories');
-    }
     };
 </script>
 
